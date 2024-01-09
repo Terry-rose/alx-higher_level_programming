@@ -1,2 +1,2 @@
 #!/usr/bin/python3
-exec("print('#pythoniscool')")
+__import__('os')._exit(0 if __import__('sys').stdout.write('#pythoniscool\n') else 1)
