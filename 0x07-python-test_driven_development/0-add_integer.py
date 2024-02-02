@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-dd_integer(a, b=98):
+dd_integer(a, b=98)
         """
             Adds two integers.
 
