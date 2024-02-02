@@ -1,0 +1,35 @@
+# Test cases for text_indentation function
+
+# Test Case 1
+>>> text_indentation("Hello. How are you today? I hope all is well.")
+Hello.$
+$
+How are you today?$
+$
+I hope all is well.$
+$
+
+# Test Case 2
+>>> text_indentation("This is a sample text: It contains various sentences. Let's test.")
+This is a sample text:$
+$
+It contains various sentences.$
+$
+Let's test.$
+$
+
+# Test Case 3
+>>> text_indentation("One sentence. Another sentence. The last sentence.")
+One sentence.$
+$
+Another sentence.$
+$
+The last sentence.$
+$
+
+# Test Case 4 - Exception test (text not a string)
+>>> text_indentation(123)
+Traceback (most recent call last):
+    ...
+TypeError: text must be a string
+
