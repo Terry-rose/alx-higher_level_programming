@@ -1,0 +1,76 @@
+# Test cases for lazy_matrix_mul function using NumPy
+
+# Test Case 1
+>>> lazy_matrix_mul([[1, 2], [3, 4]], [[1, 2], [3, 4]])
+[[7, 10], [15, 22]]
+
+# Test Case 2
+>>> lazy_matrix_mul([[1, 2]], [[3, 4], [5, 6]])
+[[13, 16]]
+
+# Test Case 3 - Exception test (m_a not a list)
+>>> lazy_matrix_mul(123, [[1, 2], [3, 4]])
+Traceback (most recent call last):
+    ...
+TypeError: Invalid type for input parameter. Input must be a list.
+
+# Test Case 4 - Exception test (m_b not a list)
+>>> lazy_matrix_mul([[1, 2], [3, 4]], 123)
+Traceback (most recent call last):
+    ...
+TypeError: Invalid type for input parameter. Input must be a list.
+
+# Test Case 5 - Exception test (m_a not a list of lists)
+>>> lazy_matrix_mul([1, 2, 3], [[1, 2], [3, 4]])
+Traceback (most recent call last):
+    ...
+TypeError: Invalid type for input parameter. Input must be a list of lists.
+
+# Test Case 6 - Exception test (m_b not a list of lists)
+>>> lazy_matrix_mul([[1, 2], [3, 4]], [1, 2, 3])
+Traceback (most recent call last):
+    ...
+TypeError: Invalid type for input parameter. Input must be a list of lists.
+
+# Test Case 7 - Exception test (m_a is empty)
+>>> lazy_matrix_mul([], [[1, 2], [3, 4]])
+Traceback (most recent call last):
+    ...
+ValueError: m_a can't be empty
+
+# Test Case 8 - Exception test (m_b is empty)
+>>> lazy_matrix_mul([[1, 2], [3, 4]], [])
+Traceback (most recent call last):
+    ...
+ValueError: m_b can't be empty
+
+# Test Case 9 - Exception test (element in m_a is not an integer or float)
+>>> lazy_matrix_mul([[1, 2], [3, 'four']], [[1, 2], [3, 4]])
+Traceback (most recent call last):
+    ...
+TypeError: Input matrices must contain only integers or floats.
+
+# Test Case 10 - Exception test (element in m_b is not an integer or float)
+>>> lazy_matrix_mul([[1, 2], [3, 4]], [['one', 2], [3, 4]])
+Traceback (most recent call last):
+    ...
+TypeError: Input matrices must contain only integers or floats.
+
+# Test Case 11 - Exception test (rows of m_a have different sizes)
+>>> lazy_matrix_mul([[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4]])
+Traceback (most recent call last):
+    ...
+TypeError: Input matrices must have consistent row sizes.
+
+# Test Case 12 - Exception test (rows of m_b have different sizes)
+>>> lazy_matrix_mul([[1, 2], [3, 4]], [[1, 2, 3], [4, 5, 6]])
+Traceback (most recent call last):
+    ...
+TypeError: Input matrices must have consistent row sizes.
+
+# Test Case 13 - Exception test (m_a and m_b can't be multiplied)
+>>> lazy_matrix_mul([[1, 2], [3, 4]], [[5, 6], [7, 8]])
+Traceback (most recent call last):
+    ...
+ValueError: m_a and m_b can't be multiplied
+

@@ -1,0 +1,76 @@
+# Test cases for matrix_mul function
+
+# Test Case 1
+>>> matrix_mul([[1, 2], [3, 4]], [[1, 2], [3, 4]])
+[[7, 10], [15, 22]]
+
+# Test Case 2
+>>> matrix_mul([[1, 2]], [[3, 4], [5, 6]])
+[[13, 16]]
+
+# Test Case 3 - Exception test (m_a not a list)
+>>> matrix_mul(123, [[1, 2], [3, 4]])
+Traceback (most recent call last):
+    ...
+TypeError: m_a must be a list or m_b must be a list
+
+# Test Case 4 - Exception test (m_b not a list)
+>>> matrix_mul([[1, 2], [3, 4]], 123)
+Traceback (most recent call last):
+    ...
+TypeError: m_a must be a list or m_b must be a list
+
+# Test Case 5 - Exception test (m_a not a list of lists)
+>>> matrix_mul([1, 2, 3], [[1, 2], [3, 4]])
+Traceback (most recent call last):
+    ...
+TypeError: m_a must be a list of lists or m_b must be a list of lists
+
+# Test Case 6 - Exception test (m_b not a list of lists)
+>>> matrix_mul([[1, 2], [3, 4]], [1, 2, 3])
+Traceback (most recent call last):
+    ...
+TypeError: m_a must be a list of lists or m_b must be a list of lists
+
+# Test Case 7 - Exception test (m_a is empty)
+>>> matrix_mul([], [[1, 2], [3, 4]])
+Traceback (most recent call last):
+    ...
+ValueError: m_a can't be empty
+
+# Test Case 8 - Exception test (m_b is empty)
+>>> matrix_mul([[1, 2], [3, 4]], [])
+Traceback (most recent call last):
+    ...
+ValueError: m_b can't be empty
+
+# Test Case 9 - Exception test (element in m_a is not an integer or float)
+>>> matrix_mul([[1, 2], [3, 'four']], [[1, 2], [3, 4]])
+Traceback (most recent call last):
+    ...
+TypeError: m_a should contain only integers or floats or m_b should contain only integers or floats
+
+# Test Case 10 - Exception test (element in m_b is not an integer or float)
+>>> matrix_mul([[1, 2], [3, 4]], [['one', 2], [3, 4]])
+Traceback (most recent call last):
+    ...
+TypeError: m_a should contain only integers or floats or m_b should contain only integers or floats
+
+# Test Case 11 - Exception test (rows of m_a have different sizes)
+>>> matrix_mul([[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4]])
+Traceback (most recent call last):
+    ...
+TypeError: each row of m_a must be of the same size or each row of m_b must be of the same size
+
+# Test Case 12 - Exception test (rows of m_b have different sizes)
+>>> matrix_mul([[1, 2], [3, 4]], [[1, 2, 3], [4, 5, 6]])
+Traceback (most recent call last):
+    ...
+TypeError: each row of m_a must be of the same size or each row of m_b must be of the same size
+
+# Test Case 13 - Exception test (m_a and m_b can't be multiplied)
+>>> matrix_mul([[1, 2], [3, 4]], [[5, 6], [7, 8]])
+Traceback (most recent call last):
+    ...
+ValueError: m_a and m_b can't be multiplied
+
