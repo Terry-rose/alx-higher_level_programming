@@ -10,6 +10,12 @@ class BaseGeometry:
     Methods:
         area(): Raises an Exception with the message 'area() is not implemented'.
         integer_validator(name, value): Validates the given integer value.
+        Example:
+        >>> bg = BaseGeometry()
+        >>> bg.area()
+        Traceback (most recent call last):
+            ...
+        Exception: area() is not implemented
         """
 
 
