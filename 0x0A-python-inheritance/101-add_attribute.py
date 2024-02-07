@@ -1,4 +1,10 @@
 #!/usr/bin/python3
+"""
+This module defines a function add_attribute.
+
+Module Usage:
+    $ ./101-main.py
+    """
 
 def add_attribute(obj, attribute, value):
     """Adds a new attribute to an object if it's possible.

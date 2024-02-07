@@ -1,7 +1,14 @@
 #!/usr/bin/python3
 
 class BaseGeometry:
-    """A base geometry class."""
+    """
+    This module defines a class Square that inherits from Rectangle.
+
+Instantiation with size and implementation of the area method.
+
+Module Usage:
+    $ ./10-main.py
+    """
 
     def area(self):
         """Raises an Exception with the message 'area() is not implemented'."""

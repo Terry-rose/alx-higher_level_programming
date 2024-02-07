@@ -1,4 +1,12 @@
 #!/usr/bin/python3
+"""
+This module defines a class MyInt that inherits from int.
+
+MyInt is a rebel. MyInt has == and != operators inverted.
+
+Module Usage:
+    $ ./100-main.py
+"""
 
 class MyInt(int):
     """A class representing an integer with inverted == and != operators."""

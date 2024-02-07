@@ -1,4 +1,11 @@
 #!/usr/bin/python3
+"""
+This module defines a class MyList that inherits from list.
+
+Module Usage:
+    $ ./1-main.py
+
+"""
 
 class MyList(list):
     """A custom list class that inherits from list."""

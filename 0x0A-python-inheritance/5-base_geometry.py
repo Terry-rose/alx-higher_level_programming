@@ -1,4 +1,12 @@
 #!/usr/bin/python3
+"""
+This module defines an empty class BaseGeometry.
+
+Module Usage:
+    $ ./5-main.py
+
+"""
+
 
 class BaseGeometry:
     """An empty class."""

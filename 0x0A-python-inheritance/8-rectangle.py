@@ -1,7 +1,14 @@
 #!/usr/bin/python3
 
 class BaseGeometry:
-    """A base geometry class."""
+    """
+    This module defines a class Rectangle that inherits from BaseGeometry.
+
+Instantiation with width and height.
+
+Module Usage:
+    $ ./8-main.py
+    """
 
     def area(self):
         """Raises an Exception with the message 'area() is not implemented'."""

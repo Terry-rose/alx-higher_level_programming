@@ -1,4 +1,11 @@
 #!/usr/bin/python3
+"""
+This module defines a function inherits_from.
+
+Module Usage:
+    $ ./4-main.py
+
+"""
 
 def inherits_from(obj, a_class):
     """Returns True if the object is an instance of a class that inherited

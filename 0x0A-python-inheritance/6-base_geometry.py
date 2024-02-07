@@ -1,4 +1,11 @@
 #!/usr/bin/python3
+"""
+This module defines a class BaseGeometry with a public instance method area.
+
+Module Usage:
+    $ ./6-main.py
+
+"""
 
 class BaseGeometry:
     """A base geometry class."""
