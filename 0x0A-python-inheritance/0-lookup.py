@@ -1,13 +1,27 @@
 #!/usr/bin/python3
-def lookup(obj):
-    """
-    Return a list of available attributes and methods of an object.
 
-    Parameters:
-    - obj: The object to inspect.
+def lookup(obj):
+    """Returns the list of available attributes and methods of an object.
+
+    Args:
+        obj: The object to look up.
 
     Returns:
-    - A list containing the names of attributes and methods of the object.
+        A list of attribute and method names.
     """
-    return [attr for attr in dir(obj)]
+    return dir(obj)
+
+# Example usage
+if __name__ == "__main__":
+    class MyClass1(object):
+        pass
+
+    class MyClass2(object):
+        my_attr1 = 3
+        def my_meth(self):
+            pass
+
+    print(lookup(MyClass1))
+    print(lookup(MyClass2))
+    print(lookup(int))
 
