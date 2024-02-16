@@ -1,142 +1,231 @@
 #!/usr/bin/python3
-"""Module containing the Rectangle class."""
+"""Rectangle module."""
+import json
+import csv
+from models.base import Base
 
-class Rectangle:
-    """Rectangle class with width, height, x, y, and id attributes."""
 
-    __nb_objects = 0
+class Rectangle(Base):
+    """Rectangle class."""
 
     def __init__(self, width, height, x=0, y=0, id=None):
-        """Class constructor.
-
-        Args:
-            width (int): Width of the rectangle.
-            height (int): Height of the rectangle.
-            x (int): X-coordinate of the rectangle (default is 0).
-            y (int): Y-coordinate of the rectangle (default is 0).
-            id (int): ID of the rectangle (default is None).
-
-        Attributes:
-            width (int): Width of the rectangle.
-            height (int): Height of the rectangle.
-            x (int): X-coordinate of the rectangle.
-            y (int): Y-coordinate of the rectangle.
-            id (int): ID of the rectangle.
-        """
+        """Initialize a Rectangle instance."""
+        super().__init__(id)
         self.width = width
         self.height = height
         self.x = x
         self.y = y
-        self.id = id if id is not None else self.__generate_id()
 
     @property
     def width(self):
-        """Getter for the width attribute."""
+        """Get width."""
         return self.__width
 
     @width.setter
     def width(self, value):
-        """Setter for the width attribute."""
+        """Set width."""
         self.__validate_positive_int("width", value)
         self.__width = value
 
     @property
     def height(self):
-        """Getter for the height attribute."""
+        """Get height."""
         return self.__height
 
     @height.setter
     def height(self, value):
-        """Setter for the height attribute."""
+        """Set height."""
         self.__validate_positive_int("height", value)
         self.__height = value
 
     @property
     def x(self):
-        """Getter for the x attribute."""
+        """Get x."""
         return self.__x
 
     @x.setter
     def x(self, value):
-        """Setter for the x attribute."""
-        self.__validate_non_negative_int("x", value)
+        """Set x."""
+        self.__validate_int("x", value)
         self.__x = value
 
     @property
     def y(self):
-        """Getter for the y attribute."""
+        """Get y."""
         return self.__y
 
     @y.setter
     def y(self, value):
-        """Setter for the y attribute."""
-        self.__validate_non_negative_int("y", value)
+        """Set y."""
+        self.__validate_int("y", value)
         self.__y = value
 
-    @property
-    def id(self):
-        """Getter for the id attribute."""
-        return self.__id
-
-    @id.setter
-    def id(self, value):
-        """Setter for the id attribute."""
-        self.__validate_positive_int("id", value)
-        self.__id = value
+    def __validate_int(self, attribute, value):
+        """Validate if a value is an integer."""
+        if not isinstance(value, int):
+            raise TypeError("{} must be an integer".format(attribute))
 
     def __validate_positive_int(self, attribute, value):
-        """Validate that a value is a positive integer."""
-        if not isinstance(value, int) or value <= 0:
-            raise TypeError("{} must be a positive integer".format(attribute))
-
-    def __validate_non_negative_int(self, attribute, value):
-        """Validate that a value is a non-negative integer."""
-        if not isinstance(value, int) or value < 0:
-            raise TypeError("{} must be a non-negative integer".format(attribute))
-
-    def __generate_id(self):
-        """Generate a new ID."""
-        Rectangle.__nb_objects += 1
-        return Rectangle.__nb_objects
+        """Validate if a value is a positive integer."""
+        self.__validate_int(attribute, value)
+        if value < 0:
+            raise ValueError("{} must be >= 0".format(attribute))
 
     def area(self):
-        """Return the area of the rectangle."""
+        """Compute area."""
         return self.width * self.height
 
     def display(self):
-        """Print the rectangle with '#' characters."""
+        """Display the rectangle."""
         for _ in range(self.y):
             print()
         for _ in range(self.height):
             print(" " * self.x + "#" * self.width)
 
     def __str__(self):
-        """Return a string representation of the rectangle."""
+        """String representation."""
         return "[Rectangle] ({}) {}/{} - {}/{}".format(
-            self.id, self.x, self.y, self.width, self.height)
+            self.id, self.x, self.y, self.width, self.height
+        )
 
     def update(self, *args, **kwargs):
-        """Assign arguments to attributes.
-
-        Args:
-            *args: Arguments passed as positional arguments.
-            **kwargs: Arguments passed as keyworded arguments.
-        """
+        """Update attributes."""
         if args:
             attrs = ["id", "width", "height", "x", "y"]
-            for attr, value in zip(attrs, args):
-                setattr(self, attr, value)
+            for i, value in enumerate(args):
+                setattr(self, attrs[i], value)
         elif kwargs:
             for key, value in kwargs.items():
                 setattr(self, key, value)
 
     def to_dictionary(self):
-        """Return the dictionary representation of the rectangle."""
+        """Return dictionary representation."""
         return {
-            'id': self.id,
-            'width': self.width,
-            'height': self.height,
-            'x': self.x,
-            'y': self.y
+            "id": self.id,
+            "width": self.width,
+            "height": self.height,
+            "x": self.x,
+            "y": self.y,
         }
+
+    @staticmethod
+    def to_json_string(list_dictionaries):
+        """Return JSON string representation of list_dictionaries."""
+        if list_dictionaries is None or not list_dictionaries:
+            return "[]"
+        return json.dumps(list_dictionaries)
+
+    @staticmethod
+    def from_json_string(json_string):
+        """Return list of dictionaries represented by json_string."""
+        if json_string is None or not json_string:
+            return []
+        return json.loads(json_string)
+
+    @classmethod
+    def save_to_file(cls, list_objs):
+        """Save list_objs to a file in JSON format."""
+        filename = "{}.json".format(cls.__name__)
+        with open(filename, mode="w", encoding="utf-8") as file:
+            if list_objs is None:
+                file.write(cls.to_json_string([]))
+            else:
+                list_dicts = [obj.to_dictionary() for obj in list_objs]
+                file.write(cls.to_json_string(list_dicts))
+
+    @classmethod
+    def load_from_file(cls):
+        """Load list_objs from a file in JSON format."""
+        filename = "{}.json".format(cls.__name__)
+        try:
+            with open(filename, mode="r", encoding="utf-8") as file:
+                json_string = file.read()
+                list_dicts = cls.from_json_string(json_string)
+                return [cls.create(**d) for d in list_dicts]
+        except FileNotFoundError:
+            return []
+
+    @staticmethod
+    def draw(list_rectangles, list_squares):
+        """Draw rectangles and squares."""
+        import turtle
+
+        turtle.bgcolor("white")
+        turtle.title("Draw Rectangles and Squares")
+
+        def draw_shape(obj, color):
+            turtle.penup()
+            turtle.goto(obj.x - obj.width / 2, obj.y - obj.height / 2)
+            turtle.pendown()
+            turtle.color(color)
+            turtle.begin_fill()
+            for _ in range(4):
+                if _ % 2 == 0:
+                    turtle.forward(obj.width)
+                else:
+                    turtle.forward(obj.height)
+                turtle.left(90)
+            turtle.end_fill()
+
+        for rect in list_rectangles:
+            draw_shape(rect, "blue")
+
+        for square in list_squares:
+            draw_shape(square, "red")
+
+        turtle.done()
+
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """Save list_objs to a file in CSV format."""
+        filename = "{}.csv".format(cls.__name__)
+        with open(filename, mode="w", newline="", encoding="utf-8") as file:
+            writer = csv.writer(file)
+            if list_objs is not None:
+                for obj in list_objs:
+                    if cls.__name__ == "Rectangle":
+                        writer.writerow(
+                            [obj.id, obj.width, obj.height, obj.x, obj.y]
+                        )
+                    elif cls.__name__ == "Square":
+                        writer.writerow([obj.id, obj.size, obj.x, obj.y])
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """Load list_objs from a file in CSV format."""
+        filename = "{}.csv".format(cls.__name__)
+        try:
+            with open(filename, mode="r", encoding="utf-8") as file:
+                reader = csv.reader(file)
+                list_objs = []
+                for row in reader:
+                    if cls.__name__ == "Rectangle":
+                        obj = cls.create(
+                            id=int(row[0]),
+                            width=int(row[1]),
+                            height=int(row[2]),
+                            x=int(row[3]),
+                            y=int(row[4]),
+                        )
+                    elif cls.__name__ == "Square":
+                        obj = cls.create(
+                            id=int(row[0]),
+                            size=int(row[1]),
+                            x=int(row[2]),
+                            y=int(row[3]),
+                        )
+                    list_objs.append(obj)
+                return list_objs
+        except FileNotFoundError:
+            return []
+
+    @classmethod
+    def create(cls, **dictionary):
+        """Create an instance with all attributes already set."""
+        if cls.__name__ == "Rectangle":
+            dummy = cls(1, 1)
+        elif cls.__name__ == "Square":
+            dummy = cls(1)
+        dummy.update(**dictionary)
+        return dummy
 
